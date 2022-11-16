@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Document</title>
-    </head>
-    <body></body>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <!-- React Import -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- ReactJS element 생성 (어려운 방법) -->
+    <script>
+        const root = document.getElementById("root");
+        const h3 = React.createElement(
+            "h3",
+            {
+                key: "msg",
+                onMouseEnter: () => console.log("mouse enter"),
+            },
+            "Hello I'm Ong!"
+        );
+        const btn = React.createElement(
+            "button",
+            {
+                key: "btn",
+                onClick: () => console.log("i'm clicked;;;"),
+            },
+            "Click Me!!"
+        );
+        const container = React.createElement("div", { key: "ctn" }, [h3, btn]);
+        ReactDOM.render(container, root);
+    </script>
 </html>
