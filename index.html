@@ -11,59 +11,47 @@
     <script type="text/babel" data-type="module">
         // const root = ReactDOM.createRoot(document.getElementById("root"));
         const root = document.getElementById("root");
-        // let counter = 0;
-
-        // function countUp() {
-        //     counter += 1;
-        //     render();
-        // }
-
-        // function render() {
-        //     ReactDOM.render(<App />, root);
-        // }
 
         function App() {
             // state 설정
-            // useState() => [data, f] / f = data 바꿀 때 사용되는 함수
-            const [counter, setCounter] = React.useState(0);
-            const onClick = () => {
-                setCounter(counter + 1);
+            const [minutes, setMinutes] = React.useState(0);
+            const onChange = (event) => {
+                setMinutes(event.target.value);
             };
 
-            // 컴포넌트가 대문자로 시작 안하면 HTML 태그로 인식함
-            // {} 안에 변수 삽입 가능
+            const reset = () => setMinutes(0);
+
             return (
+                /* 분 -> 시간 변환 */
                 <div>
-                    <h3>Total Clicks: {counter}</h3>
-                    <button onClick={onClick}>Cilck Me!!</button>
+                    <h1 className="title">Super Converter</h1>
+                    {/* 분 입력(minutes 동기화) */}
+                    <div>
+                        <label htmlFor="minutes">Minutes</label>
+                        <input
+                            value={minutes}
+                            id="minutes"
+                            placeholder="Minutes"
+                            type="number"
+                            onChange={onChange}
+                        />
+                    </div>
+                    {/* 시간 변환(minutes 동기화 계산) */}
+                    <div>
+                        <label htmlFor="hours">Hours</label>
+                        <input
+                            value={Math.round(minutes / 60)}
+                            id="hours"
+                            placeholder="Hours"
+                            type="number"
+                        />
+                    </div>
+                    {/* 초기화 버튼 */}
+                    <button onClick={reset}>RESET</button>
                 </div>
             );
         }
 
         ReactDOM.render(<App />, root);
-        /*
-        <ReactJS element 생성 (어려운 방법)>
-        const h3 = React.createElement(
-            "h3",
-            {
-                key: "msg",
-                onMouseEnter: () => console.log("mouse enter"),
-            },
-            "Hello I'm Ong!"
-        );
-        const btn = React.createElement(
-            "button",
-            {
-                key: "btn",
-                onClick: () => console.log("i'm clicked;;;"),
-            },
-            "Click Me!!"
-        );
-        const container = React.createElement("div", { key: "ctn" }, [
-            Title,
-            Btn,
-        ]);
-        ReactDOM.render(Container, root);
-        */
     </script>
 </html>

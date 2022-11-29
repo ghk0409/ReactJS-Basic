@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <!-- React Import -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel Import -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" data-type="module">
+        // const root = ReactDOM.createRoot(document.getElementById("root"));
+        const root = document.getElementById("root");
+        // let counter = 0;
+
+        // function countUp() {
+        //     counter += 1;
+        //     render();
+        // }
+
+        // function render() {
+        //     ReactDOM.render(<App />, root);
+        // }
+
+        function App() {
+            // state 설정
+            // useState() => [data, f] / f = data 바꿀 때 사용되는 함수
+            const [counter, setCounter] = React.useState(0);
+            const onClick = () => {
+                // setCounter(counter + 1);
+                setCounter((current) => current + 1); // function을 이용해서 안전하게!
+            };
+
+            // 컴포넌트가 대문자로 시작 안하면 HTML 태그로 인식함
+            // {} 안에 변수 삽입 가능
+            return (
+                <div>
+                    <h3>Total Clicks: {counter}</h3>
+                    <button onClick={onClick}>Cilck Me!!</button>
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, root);
+        /*
+        <ReactJS element 생성 (어려운 방법)>
+        const h3 = React.createElement(
+            "h3",
+            {
+                key: "msg",
+                onMouseEnter: () => console.log("mouse enter"),
+            },
+            "Hello I'm Ong!"
+        );
+        const btn = React.createElement(
+            "button",
+            {
+                key: "btn",
+                onClick: () => console.log("i'm clicked;;;"),
+            },
+            "Click Me!!"
+        );
+        const container = React.createElement("div", { key: "ctn" }, [
+            Title,
+            Btn,
+        ]);
+        ReactDOM.render(Container, root);
+        */
+    </script>
+</html>
