@@ -14,12 +14,18 @@
 
         function App() {
             // state 설정
-            const [minutes, setMinutes] = React.useState(0);
+            const [amount, setAmount] = React.useState(0);
+            const [inverted, setInverted] = React.useState(false);
             const onChange = (event) => {
-                setMinutes(event.target.value);
+                setAmount(event.target.value);
             };
-
-            const reset = () => setMinutes(0);
+            // 초기화 함수
+            const reset = () => setAmount(0);
+            // 분/시간 활성화 상태 변환 함수
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);
+            };
 
             return (
                 /* 분 -> 시간 변환 */
@@ -29,25 +35,31 @@
                     <div>
                         <label htmlFor="minutes">Minutes</label>
                         <input
-                            value={minutes}
+                            value={inverted ? amount * 60 : amount}
                             id="minutes"
                             placeholder="Minutes"
                             type="number"
                             onChange={onChange}
+                            disabled={inverted}
                         />
                     </div>
                     {/* 시간 변환(minutes 동기화 계산) */}
                     <div>
                         <label htmlFor="hours">Hours</label>
                         <input
-                            value={Math.round(minutes / 60)}
+                            value={inverted ? amount : Math.round(amount / 60)}
                             id="hours"
                             placeholder="Hours"
                             type="number"
+                            onChange={onChange}
+                            disabled={!inverted}
                         />
                     </div>
                     {/* 초기화 버튼 */}
                     <button onClick={reset}>RESET</button>
+                    <button onClick={onInvert}>
+                        {inverted ? "Turn back" : "Invert"}
+                    </button>
                 </div>
             );
         }
