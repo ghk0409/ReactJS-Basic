@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <div id="root"></div>
+    </body>
+    <!-- React Import -->
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <!-- Babel Import -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script type="text/babel" data-type="module">
+        // const root = ReactDOM.createRoot(document.getElementById("root"));
+        const root = document.getElementById("root");
+
+        // 시간 변환
+        function MinutesToHours() {
+            // state 설정
+            const [amount, setAmount] = React.useState(0);
+            const [inverted, setInverted] = React.useState(false);
+            const onChange = (event) => {
+                setAmount(event.target.value);
+            };
+            // 초기화 함수
+            const reset = () => setAmount(0);
+            // 분/시간 활성화 상태 변환 함수
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);
+            };
+
+            return (
+                /* 분 -> 시간 변환 */
+                <div>
+                    {/* 분 입력(minutes 동기화) */}
+                    <div>
+                        <label htmlFor="minutes">Minutes</label>
+                        <input
+                            value={inverted ? amount * 60 : amount}
+                            id="minutes"
+                            placeholder="Minutes"
+                            type="number"
+                            onChange={onChange}
+                            disabled={inverted}
+                        />
+                    </div>
+                    {/* 시간 변환(minutes 동기화 계산) */}
+                    <div>
+                        <label htmlFor="hours">Hours</label>
+                        <input
+                            value={inverted ? amount : Math.round(amount / 60)}
+                            id="hours"
+                            placeholder="Hours"
+                            type="number"
+                            onChange={onChange}
+                            disabled={!inverted}
+                        />
+                    </div>
+                    {/* 초기화 버튼 */}
+                    <button onClick={reset}>RESET</button>
+                    {/* 변환 변경 버튼 */}
+                    <button onClick={onInvert}>
+                        {inverted ? "Turn back" : "Invert"}
+                    </button>
+                </div>
+            );
+        }
+        // 거리 변환
+        function KmToMiles() {
+            // state 설정
+            const [amount, setAmount] = React.useState(0);
+            const [inverted, setInverted] = React.useState(false);
+            const onChange = (event) => {
+                setAmount(event.target.value);
+            };
+            // 초기화 함수
+            const reset = () => setAmount(0);
+            // 분/시간 활성화 상태 변환 함수
+            const onInvert = () => {
+                reset();
+                setInverted((current) => !current);
+            };
+
+            return (
+                <div>
+                    {/* Km 2 Miles */}
+                    <div>
+                        <label htmlFor="kilometers">Kilometers</label>
+                        <input
+                            value={
+                                inverted ? (amount / 1.609).toFixed(2) : amount
+                            }
+                            id="kilometers"
+                            placeholder="Kilometers"
+                            type="number"
+                            onChange={onChange}
+                            disabled={inverted}
+                        />
+                    </div>
+                    {/* Miles 2 Km */}
+                    <div>
+                        <label htmlFor="miles">Miles</label>
+                        <input
+                            value={
+                                inverted ? amount : (amount * 1.609).toFixed(2)
+                            }
+                            id="miles"
+                            placeholder="Miles"
+                            type="number"
+                            onChange={onChange}
+                            disabled={!inverted}
+                        />
+                    </div>
+                    {/* 초기화 버튼 */}
+                    <button onClick={reset}>RESET</button>
+                    {/* 변환 변경 버튼 */}
+                    <button onClick={onInvert}>
+                        {inverted ? "Turn back" : "Invert"}
+                    </button>
+                </div>
+            );
+        }
+
+        function App() {
+            const [index, setIndex] = React.useState("0");
+            const onSelect = (event) => {
+                setIndex(event.target.value);
+            };
+
+            return (
+                <div>
+                    <h1>Super Converter</h1>
+                    <select value={index} onChange={onSelect}>
+                        <option value="0">수퍼 컨버터 선택</option>
+                        <option value="1">Minutes & Hours</option>
+                        <option value="2">Km & Miles</option>
+                    </select>
+                    <hr />
+                    {index === "0" ? "수퍼 컨버터를 선택해주세요^^" : null}
+                    {index === "1" ? <MinutesToHours /> : null}
+                    {index === "2" ? <KmToMiles /> : null}
+                </div>
+            );
+        }
+
+        ReactDOM.render(<App />, root);
+    </script>
+</html>
