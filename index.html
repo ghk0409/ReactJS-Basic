@@ -6,11 +6,12 @@
     <!-- React Import -->
     <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/prop-types@15.7.2/prop-types.js"></script>
     <!-- Babel Import -->
     <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
     <script type="text/babel" data-type="module">
         // 버튼 컴포넌트
-        function Btn({ title, onClick }) {
+        function Btn({ title, onClick, fontSize = 14 }) {
             console.log(`${title} is re-rendering`);
             return (
                 <button
@@ -21,15 +22,26 @@
                         padding: "10px 20px",
                         border: 0,
                         borderRadius: 10,
-                        fontSize: 16,
+                        fontSize,
                     }}
                 >
                     {title}
                 </button>
             );
         }
+        // props 타입 설정 (타입 불일치에 대한 디버깅 가능)
+        Btn.propTypes = {
+            title: PropTypes.string.isRequired,
+            fontSize: PropTypes.number,
+        };
 
         const MemorizedBtn = React.memo(Btn);
+
+        // MomorizedBtn 아래에서는 Btn.propTypes 안되는게 당연
+        // MemorizedBtn.propTypes = {
+        //     title: PropTypes.string,
+        //     fontSize: PropTypes.number,
+        // };
 
         function App() {
             const [value, setValue] = React.useState("Save Changes");
@@ -38,7 +50,11 @@
             return (
                 <div>
                     {/* Btn({title:"Save Changes"})와 동일 (함수형 컴포넌트) */}
-                    <MemorizedBtn title={value} onClick={chageValue} />
+                    <MemorizedBtn
+                        title={value}
+                        onClick={chageValue}
+                        fontSize={20}
+                    />
                     <MemorizedBtn title="Continue" />
                 </div>
             );
